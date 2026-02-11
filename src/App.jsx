@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import "./App.css";
 
@@ -7,6 +7,10 @@ function App() {
   const [yesSize, setYesSize] = useState(1);
   const [noPosition, setNoPosition] = useState({ x: 0, y: 0 });
   const [noText, setNoText] = useState("No 😏");
+  const audioRef = useRef(null);
+  const [musicStarted, setMusicStarted] = useState(false);
+
+
 
   const noMessages = [
     "Are you sure? 😄",
@@ -18,10 +22,19 @@ function App() {
     "Please nowwww 😢"
 
   ];
+  
+  const startMusic = () => {
+    if (!musicStarted && audioRef.current) {
+      audioRef.current.play();
+      setMusicStarted(true);
+    }
+  };
+
 
   const handleNoClick = () => {
     // Grow YES button
     setYesSize((prev) => Math.min(prev + 0.25, 2.5));
+    startMusic();
 
     // Move NO button randomly
     setNoPosition({
@@ -33,8 +46,14 @@ function App() {
     setNoText(noMessages[Math.floor(Math.random() * noMessages.length)]);
   };
 
+  const handleYesClick = () => {
+    startMusic();
+    setYesClicked(true);
+  };
+
   return (
-    <div className="container">
+    <div className="container" onClick={startMusic}>
+      <audio ref={audioRef} src="/romantic.mp3" loop />
       {/* Floating Hearts */}
       {!yesClicked && <Hearts />}
 
