@@ -19,6 +19,7 @@ function App() {
     "Say yes nowwww 😘",
     "You can’t escape 😌",
     "Last chance o 😏",
+    "Ummunaa 😏",
     "Please nowwww 😢"
 
   ];
